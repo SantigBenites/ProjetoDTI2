@@ -2,30 +2,18 @@ package DTI;
 
 import bftsmart.tom.ServiceProxy;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BFTWallet {
     private final Logger logger = LoggerFactory.getLogger("bftsmart");
     private final ServiceProxy serviceProxy;
-
-    // Coins, NFTs and Requests Storage
-    private Map<Long,LinkedList<Coin>> coins;
-    private Map<Long,LinkedList<NFT>> nfts;
-    private LinkedList<Request> requests;
     
     public BFTWallet(int id) {
         serviceProxy = new ServiceProxy(id);
-        coins =  new HashMap<Long,LinkedList<Coin>>(); 
-        nfts = new HashMap<Long,LinkedList<NFT>>();
-        requests = new LinkedList<Request>();
     }
 
-    public int MY_COINS(){
+    public List<Pair<Long,Integer>> MY_COINS(){
         
     return 1;
     }
