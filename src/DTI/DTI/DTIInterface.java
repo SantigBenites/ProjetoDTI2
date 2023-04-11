@@ -14,12 +14,48 @@ public class DTIInterface {
         Console console = System.console();
 
         System.out.println("\nCommands:\n");
-        System.out.println("\tPUT: Insert value into the map");
-        System.out.println("\tGET: Retrieve value from the map");
-        System.out.println("\tSIZE: Retrieve the size of the map");
-        System.out.println("\tREMOVE: Removes the value associated with the supplied key");
-        System.out.println("\tKEYSET: List all keys available in the table");
+
+        System.out.println("\tMY_COINS");
+        System.out.println("\tMINT");
+        System.out.println("\tSPEND");
+
+        System.out.println("\tMY_NFTS");
+        System.out.println("\tMINT_NFT");
+        System.out.println("\tREQUEST_NFT_TRANSFER");
+        System.out.println("\tCANCEL_REQUEST_NFT_TRANSFER");
+        System.out.println("\tMY_NFT_REQUESTS");
+        System.out.println("\tPROCESS_NFT_TRANSFER");
+
         System.out.println("\tEXIT: Terminate this client\n");
+
+
+        while (true){
+            String cmd = console.readLine("\n  > ");
+            if (cmd.equalsIgnoreCase("MY_COINS")){
+
+            }else if(cmd.equalsIgnoreCase("MINT")){
+
+            }else if(cmd.equalsIgnoreCase("SPEND")){
+
+            }else if(cmd.equalsIgnoreCase("MY_NFTS")){
+
+            }else if(cmd.equalsIgnoreCase("MINT_NFT")){
+
+            }else if(cmd.equalsIgnoreCase("REQUEST_NFT_TRANSFER")){
+
+            }else if(cmd.equalsIgnoreCase("CANCEL_REQUEST_NFT_TRANSFER")){
+
+            }else if(cmd.equalsIgnoreCase("MY_NFT_REQUESTS")){
+
+            }else if(cmd.equalsIgnoreCase("PROCESS_NFT_TRANSFER")){
+
+            }else{
+                System.out.println("\tInvalid command :P\n");
+            }
+
+
+
+        }
 
     }
 

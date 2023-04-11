@@ -18,4 +18,25 @@ public class NFT {
         return this.id;
     }
 
+    public long getId(){
+        return this.id;
+    }
+
+
+    @Override
+    public boolean equals(Object o){
+
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof NFT)) {
+            return false;
+        }
+
+        NFT nft = (NFT) o;
+
+        return nft.id == this.id && nft.Owner == this.Owner && nft.name.equals(this.name) && this.URI.equals(nft.URI);
+
+    }
+
 }

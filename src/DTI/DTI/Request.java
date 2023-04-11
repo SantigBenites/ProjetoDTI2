@@ -18,4 +18,10 @@ public class Request {
         this.processed = false;
     }
 
+    public NFT getNFT(){
+        return this.nftToBuy();
+    }
+
+
+
 }

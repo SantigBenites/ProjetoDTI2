@@ -18,4 +18,24 @@ public class Coin {
         return this.id;
     }
 
+    public long getId(){
+        return this.id;
+    }
+    
+    @Override
+    public boolean equals(Object o){
+
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Coin)) {
+            return false;
+        }
+
+        Coin c = (Coin) o;
+
+        return c.id == this.id && c.Owner == this.Owner && c.value == this.value;
+
+    }
+
 }
