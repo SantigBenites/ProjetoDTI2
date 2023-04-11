@@ -2,13 +2,14 @@ package DTI;
 
 import java.io.Console;
 import java.io.IOException;
+import DTI.BFTWallet;
 
 public class DTIInterface {
 
     public static void main(String[] args) throws IOException {
 
         int clientId = (args.length > 0) ? Integer.parseInt(args[0]) : 1001;
-        BFTMap<Integer, String> bftMap = new BFTMap<>(clientId);
+        BFTWallet BFTWallet = new BFTWallet(clientId);
 
         Console console = System.console();
 
