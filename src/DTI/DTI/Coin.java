@@ -38,4 +38,8 @@ public class Coin {
 
     }
 
+    public int getOwner() {
+        return this.Owner;
+    }
+
 }

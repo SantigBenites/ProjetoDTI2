@@ -38,7 +38,7 @@ public class Wallet {
 
     public long addNFT(Long idOwner, NFT nft){
         if (!nfts.keySet().contains(idOwner)){return -1;}
-        LinkedList<Coin> list = nfts.get(idOwner);
+        LinkedList<NFT> list = nfts.get(idOwner);
         if(list.contains(nft)){return -1;}
         list.add(nft);
         nfts.put(idOwner, list);
@@ -47,17 +47,41 @@ public class Wallet {
 
     // Each user can create at most one purchase offer per NFT.
     public long addRequest(Request req){
-        //NFT nft = req.getNFT();
-        if (!requests.contains(req)){return -1;}
+        for (Request r:requests){
+            if (r.getOwner() == req.getOwner() && r.getNFT().equals(req)){
+                return -1;
+            }
+        }
+        if (!req.isValid()){
+            return -1;
+        }
+        requests.add(req);
         return 0;
+    }
+
+    public void removeRequest(int idClient, long nft){
+        for (Request r:requests){
+            if(r.getOwner() == idClient){
+                if( r.getNFT().getId() == nft ){
+                    requests.remove(r);
+                }
+            }
+
+        }
 
     }
 
-    public removeRequest(NFT nft){}
+    public List<Request> getRequests(long nft){
+        List<Request> list = new LinkedList<Request>();
+        for (Request req: requests){
+            if(req.getNFT().getId() == nft){
+                list.add(req);
+            }
+        }
+        return list;
+    }
 
-    public getRequest(NFT nft){}
-
-    public transfer(Long idrequest, Long idBuyer){}
+    public void transfer(Long idrequest, Long idBuyer){}
 
 
 

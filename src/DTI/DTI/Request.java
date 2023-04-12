@@ -19,7 +19,34 @@ public class Request {
     }
 
     public NFT getNFT(){
-        return this.nftToBuy();
+        return this.nftToBuy;
+    }
+
+    public int getOwner(){
+        return this.coinsUsed.getLast().getOwner();
+    }
+
+    public boolean isValid() {
+        return this.validity;
+    }
+
+    @Override
+    public boolean equals(Object o){
+
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Request)) {
+            return false;
+        }
+
+        Request req = (Request) o;
+
+
+        return req.nftToBuy.equals(this.nftToBuy) && req.value == this.value 
+        && req.validity == this.validity && this.processed == req.processed
+        && req.coinsUsed.equals(this.coinsUsed);
+
     }
 
 
