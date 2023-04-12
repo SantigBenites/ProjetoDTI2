@@ -39,22 +39,43 @@ public class DTIServer extends DefaultSingleRecoverable{
             switch (cmd) {
                 case MINT:
 
-                    return BFTWalletMessage.toBytes(request); 
+                    if(request.userGet() != 4){
+                        return null;
+                    }
+
+                    long newCoinId = replicaWallet.addCoin(request.userGet(), request.valueGet());
+                    response.mintedCoinIDSet(newCoinId);
+
+                    return BFTWalletMessage.toBytes(response); 
                 case SPEND:
 
-                    return BFTWalletMessage.toBytes(request); 
+                    long returnCoinID = replicaWallet.spend(request.userGet(), request.usedCoinsGet(), request.receiverGet(), request.validityGet());
+                    response.returnCoinSet(returnCoinID);
+
+                    return BFTWalletMessage.toBytes(response); 
                 case MINT_NFT:
 
-                    return BFTWalletMessage.toBytes(request); 
+                    long newNFTID = replicaWallet.addNFT(request.userGet(), request.nameGet(), request.uriGet());
+                    response.mintedCoinIDSet(newNFTID);
+
+                    return BFTWalletMessage.toBytes(response); 
                 case REQUEST_NFT_TRANSFER:
 
-                    return BFTWalletMessage.toBytes(request); 
+                    long newRequestID = replicaWallet.addRequest(request.userGet(),request.NftIDGet(), request.usedCoinsGet(), request.valueGet(), request.validityGet());
+                    response.requestIDSet(newRequestID);
+
+                    return BFTWalletMessage.toBytes(response); 
                 case CANCEL_REQUEST_NFT_TRANSFER:
 
-                    return BFTWalletMessage.toBytes(request); 
+                    replicaWallet.removeRequest(request.userGet(), request.NftIDGet());
+
+                    return BFTWalletMessage.toBytes(response); 
                 case PROCESS_NFT_TRASNFER:
 
-                    return BFTWalletMessage.toBytes(request); 
+                    long newCoinPaymentID = replicaWallet.transfer(request.NftIDGet(),request.buyerGet());
+                    response.returnCoinSet(newCoinPaymentID);
+
+                    return BFTWalletMessage.toBytes(response); 
 
             }
 

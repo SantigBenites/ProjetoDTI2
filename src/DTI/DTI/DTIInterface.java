@@ -2,7 +2,10 @@ package DTI;
 
 import java.io.Console;
 import java.io.IOException;
+import java.util.List;
+
 import DTI.BFTWallet;
+import DTI.BFTWallet.Pair;
 
 public class DTIInterface {
 
@@ -33,7 +36,23 @@ public class DTIInterface {
             String cmd = console.readLine("\n  > ");
             if (cmd.equalsIgnoreCase("MY_COINS")){
 
+                List<Pair<Long, Float>> myCoins = BFTWallet.MY_COINS();
+
+                for (Pair<Long,Float> pair : myCoins) {
+                    System.out.println(pair);
+                }
+
             }else if(cmd.equalsIgnoreCase("MINT")){
+
+                long key;
+                try {
+                    key = Integer.parseInt(console.readLine("Enter a coin id: "));
+                } catch (NumberFormatException e) {
+                    System.out.println("\tThe key is supposed to be an integer!\n");
+                    continue;
+                }
+
+                BFTWallet.MINT(clientId);
 
             }else if(cmd.equalsIgnoreCase("SPEND")){
 

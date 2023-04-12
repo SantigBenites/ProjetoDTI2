@@ -31,7 +31,7 @@ public class BFTWalletMessage implements Serializable{
     private long mintedNFTID;
     // REQUEST_NFT_TRANSFER(nft, coins, value, validity)
     private long nftID;
-    private Date validity;
+    private int validity;
     private long requestID;
     // MY_NFT_REQUESTS(nft)
     private List<Request> nftRequests;
@@ -159,15 +159,15 @@ public class BFTWalletMessage implements Serializable{
         this.nftID = value;
     }
 
-    public long mintedNftIDGet(){
+    public long NftIDGet(){
         return this.nftID;
     }
 
-    public void validitySet(Date value){
+    public void validitySet(int value){
         this.validity = value;
     }
 
-    public Date validityGet(){
+    public int validityGet(){
         return this.validity;
     }
 

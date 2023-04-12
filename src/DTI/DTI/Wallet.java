@@ -118,7 +118,7 @@ public class Wallet {
         }
         return list;
     }
-    public long addRequest(Integer idOwner, Long nftId, List<Long> coins, Float value, int validity){ 
+    public long addRequest(Long idOwner, Long nftId, List<Long> coins, Float value, int validity){ 
         NFT nft = getNft(nftId);
         if(nft == null){return 0;}
 
@@ -155,7 +155,7 @@ public class Wallet {
 
     }
     //MY_NFT_REQUEST
-    public List<Request> getRequests(long nft, int idClient){
+    public List<Request> getRequests(Long idClient, long nft){
         List<Request> list = new LinkedList<Request>();
         for (Request req: requests){
             if(req.getNFT().getId() == nft){

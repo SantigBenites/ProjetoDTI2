@@ -168,7 +168,7 @@ public class BFTWallet {
         }
     }
     
-    public long REQUEST_NFT_TRANSFER(Long nft, List<Long> coins, int value, Date validity){
+    public long REQUEST_NFT_TRANSFER(Long nft, List<Long> coins, int value, int validity){
         byte[] rep;
         try {
             BFTWalletMessage request = new BFTWalletMessage();
@@ -177,7 +177,7 @@ public class BFTWallet {
             request.NftIDSet(nft);
             request.usedCoinsSet(coins);
             request.valueSet(value);
-            request.validitySet(new Date(validity.getTime() + (10 * 60000)));
+            request.validitySet(validity);
 
             //invokes BFT-SMaRt
             rep = serviceProxy.invokeOrdered(BFTWalletMessage.toBytes(request));
@@ -256,7 +256,7 @@ public class BFTWallet {
         }
     }
     
-    public long PROCESS_NFT_TRASNFE(long nft, long buyer, Boolean accept){
+    public long PROCESS_NFT_TRASNFER(long nft, long buyer, Boolean accept){
 
         if(!accept){
             return -1;
