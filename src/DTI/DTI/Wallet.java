@@ -1,7 +1,6 @@
 package DTI;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -93,13 +92,6 @@ public class Wallet {
     // REQUEST_NFT_TRANSFER
     // Each user can create at most one purchase offer per NFT.
 
-
-    NFT nftToBuy;
-    LinkedList<Coin> coinsUsed;
-    float value;
-    Boolean validity;
-    Boolean processed;
-
     private NFT getNft(Long nftId){
         for (LinkedList<NFT> nftlist : nfts.values()){
             for(NFT n : nftlist){
@@ -151,7 +143,7 @@ public class Wallet {
     }
 
     //CANCEL_REQUEST_NFT_TRANSFER
-    public void removeRequest(int idClient, long nft){
+    public void removeRequest(long idClient, long nft){
         for (Request r:requests){
             if(r.getCoinsOwner() == idClient){
                 if( r.getNFT().getId() == nft ){
@@ -174,52 +166,56 @@ public class Wallet {
     }
 
     //PROCESS_NFT_TRANSFER(
-    public float transfer(Long nft,Long idBuyer, Boolean accept){
-        if(!accept){return 0 ;}
+    public long transfer(Long Owner, Long nftId,Long idBuyer){
+        long id = 0;
         float sum = 0;
-        for (Request r:requests){
-            //Owner of coins == idBuyer
-            if(r.getCoinsOwner() == idBuyer){
-                // NFT ids req valid and as not been processed
-                if( r.getNFT().getId() == nft && isValid(r.getValidity()) && !r.isProcessed()){
-                    for (Coin c : r.getCoins()){
-                        //if Buyer does not Own Coins
-                        //get Coins
-                        if(idBuyer != c.getOwner()){return 0;}
-                        sum += c.getValue();
-                    }
+        for (Request r:requests){ 
 
-                    if(sum<r.getValue()){return 0;}
-                    //(creating two coins, just like in SPEND) and change the ownership of the NFT
-                    Coin c = new Coin( 0, r.getNftOwner());
-                    c.Mint(r.getValue());
+            if(r.getCoinsOwner() == idBuyer && r.getNFT().getId() == nftId && isValid(r.getValidity()) && !r.isProcessed()){
 
-                    //remove coins and add coins
-
-
-
-                    //Troco
-                    Coin c1 = new Coin( 0, r.getNftOwner());
-                    c1.Mint(sum - r.getValue());
-
-                    r.setProcessed(true);
-
-                    NFT nftNewOwner = r.getNFT();
-                    nfts.get(r.getNftOwner()).remove(nftNewOwner);
-
-                    nftNewOwner.setOwner(idBuyer);
-                    nfts.get(idBuyer).add(nftNewOwner);
-
-
-
-
+                for (Coin c : r.getCoins()){
+                    if(idBuyer != c.getOwner()){return 0;}
+                    sum += c.getValue();
                 }
+
+                if(sum<r.getValue()){return 0;}
+
+                //exchange nft owner
+                NFT nft = getNft(nftId);
+                if(nft == null){
+                    return 0;
+                }
+                LinkedList<NFT> list = nfts.get(Owner);
+                list.remove(nft);
+                nfts.put(Owner, list);
+
+                nft.setOwner(idBuyer);
+                LinkedList<NFT> listBuyer = nfts.get(idBuyer);
+                listBuyer.add(nft);
+                nfts.put(idBuyer, listBuyer);
+
+
+
+                //removes coins used
+                LinkedList<Coin> coinsFromBuyer = coins.get(idBuyer);
+                for(Coin c : r.getCoins()){
+                    coinsFromBuyer.remove(c);
+                }
+
+                coins.put(idBuyer, coinsFromBuyer);
+
+                //add new coins
+                id = addCoin(Owner, r.getValue());
+                addCoin(idBuyer, sum - r.getValue());
+
+                //change 
+                removeRequest(Owner,nftId);
+                r.setProcessed(true);
+                requests.add(r);
             }
-
-
         }
-        return 0;
-        
+        return id;
+
     }
 
 
