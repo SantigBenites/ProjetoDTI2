@@ -18,6 +18,10 @@ public class Coin {
         return this.id;
     }
 
+    public float getValue(){
+        return this.value;
+    }
+
     public long getId(){
         return this.id;
     }

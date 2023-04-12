@@ -1,16 +1,18 @@
 package DTI;
 
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Request {
     
     NFT nftToBuy;
     LinkedList<Coin> coinsUsed;
     float value;
-    Boolean validity;
+    Date validity;
     Boolean processed;
 
-    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, Boolean validity){
+    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, Date validity){
         this.nftToBuy = nftToBuy;
         this.coinsUsed = coinsUsed;
         this.value = value;
@@ -18,17 +20,37 @@ public class Request {
         this.processed = false;
     }
 
+    public int getNftOwner(){
+        return this.nftToBuy.getOwner();
+    }
+
     public NFT getNFT(){
         return this.nftToBuy;
     }
 
-    public int getOwner(){
+    public int getCoinsOwner(){
         return this.coinsUsed.getLast().getOwner();
     }
 
-    public boolean isValid() {
+
+    public List<Coin> getCoins(){
+        return this.coinsUsed;
+    }
+
+    public boolean isProcessed() {
+        return this.processed;
+    }
+    public float getValue() {
+        return this.value;
+    }
+    public void setProcessed(boolean b) {
+        this.processed = b;
+    }
+
+    public Date getValidity() {
         return this.validity;
     }
+
 
     @Override
     public boolean equals(Object o){
@@ -48,6 +70,12 @@ public class Request {
         && req.coinsUsed.equals(this.coinsUsed);
 
     }
+
+
+
+
+
+
 
 
 

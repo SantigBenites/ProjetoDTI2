@@ -12,6 +12,10 @@ public class NFT {
         this.Owner = Owner;
     }
 
+    public void setOwner(int Owner){
+        this.Owner = Owner;
+    }
+
     public long Mint(String name, String URI){
         this.name = name;
         this.URI = URI;
@@ -20,6 +24,10 @@ public class NFT {
 
     public long getId(){
         return this.id;
+    }
+
+    public int getOwner(){
+        return this.Owner;
     }
 
 
