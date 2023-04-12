@@ -58,6 +58,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.MINT);
+            request.userSet(id);
             request.valueSet(value);
 
             //invokes BFT-SMaRt
@@ -84,6 +85,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.MINT);
+            request.userSet(id);
             request.usedCoinsSet(coins);
             request.receiverSet(receiver);
             request.valueSet(value);
@@ -143,6 +145,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.MINT_NFT);
+            request.userSet(id);
             request.nameSet(name);
             request.uriSet(URI);
 
@@ -170,6 +173,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.REQUEST_NFT_TRANSFER);
+            request.userSet(id);
             request.NftIDSet(nft);
             request.usedCoinsSet(coins);
             request.valueSet(value);
@@ -199,6 +203,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.CANCEL_REQUEST_NFT_TRANSFER);
+            request.userSet(id);
             request.NftIDSet(nft);
 
             //invokes BFT-SMaRt
@@ -225,6 +230,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.MY_NFT_REQUEST);
+            request.userSet(id);
             request.NftIDSet(nft);
 
             //invokes BFT-SMaRt
@@ -260,6 +266,7 @@ public class BFTWallet {
         try {
             BFTWalletMessage request = new BFTWalletMessage();
             request.typeSet(MessageType.MINT);
+            request.userSet(id);
             request.NftIDSet(nft);
             request.buyerSet(buyer);
 
