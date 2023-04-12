@@ -47,7 +47,7 @@ public class DTIServer extends DefaultSingleRecoverable{
 
                     long newCoinId = replicaWallet.addCoin(request.userGet(), request.valueGet());
                     response.mintedCoinIDSet(newCoinId);
-
+                    
                     return BFTWalletMessage.toBytes(response); 
                 case SPEND:
 
