@@ -9,14 +9,16 @@ public class Request {
     NFT nftToBuy;
     LinkedList<Coin> coinsUsed;
     float value;
+    Long issuer;
     Date validity;
     Boolean processed;
 
-    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, Date validity){
+    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, long issuer, Date validity){
         this.nftToBuy = nftToBuy;
         this.coinsUsed = coinsUsed;
         this.value = value;
-        this.validity = validity;
+        this.validity = new Date(validity.getTime() + (10 * 60000));
+        this.issuer = issuer;
         this.processed = false;
     }
 

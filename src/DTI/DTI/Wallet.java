@@ -150,7 +150,7 @@ public class Wallet {
         if (!isValid(validity)){ return 0;}
 
         IdReqCounter ++;
-        requests.add(new Request(nft, list, value, validity));
+        requests.add(new Request(nft, list, value, idOwner, validity));
         return IdReqCounter;
     }
 
