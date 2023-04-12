@@ -6,20 +6,37 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
 public class BFTWalletMessage implements Serializable{
     private MessageType type;
-    private float value;
+    // MY_Coins()
+    private long user;
     private List<Coin> coins;
+    // MINT(value)
+    private float value;
+    private long mintedCoinID;
+    // SPEND(coins, receiver, value)
+    private List<Long> usedCoins;
     private long receiver;
+    private long returnCoin;
+    // MY_NFTS()
+    private List<NFT> nfts;
+    // MINT_NFT(name, uri)
     private String name;
     private String uri;
-    private Boolean validity;
-    private NFT nft;
+    private long mintedNFTID;
+    // REQUEST_NFT_TRANSFER(nft, coins, value, validity)
+    private long nftID;
+    private Date validity;
+    private long requestID;
+    // MY_NFT_REQUESTS(nft)
+    private List<Request> nftRequests;
+    // PROCESS_NFT_TRANSFER(nft, buyer, accept)
     private long buyer;
-    private Boolean accept;
 
     public BFTWalletMessage() {
     }
@@ -50,6 +67,14 @@ public class BFTWalletMessage implements Serializable{
         return this.type;
     }
 
+    public long userGet(){
+        return this.user;
+    }
+
+    public void userSet(Long value){
+        this.user = value;
+    }
+
     public void valueSet(float value){
         this.value = value;
     }
@@ -58,12 +83,28 @@ public class BFTWalletMessage implements Serializable{
         return this.value;
     }
 
+    public void mintedCoinIDSet(Long value){
+        this.mintedCoinID = value;
+    }
+
+    public long mintedCoinIDGet(){
+        return this.mintedCoinID;
+    }
+
     public void coinsSet(List<Coin> value){
         this.coins = value;
     }
 
-    public List coinsGet(){
+    public List<Coin> coinsGet(){
         return this.coins;
+    }
+
+    public void usedCoinsSet(List<Long> value){
+        this.usedCoins = value;
+    }
+
+    public List<Long> usedCoinsGet(){
+        return this.usedCoins;
     }
 
     public void receiverSet(long value){
@@ -72,6 +113,22 @@ public class BFTWalletMessage implements Serializable{
 
     public long receiverGet(){
         return this.receiver;
+    }
+
+    public void returnCoinSet(long value){
+        this.returnCoin = value;
+    }
+
+    public long returnCoinGet(){
+        return this.returnCoin;
+    }
+
+    public void nftsSet(List<NFT> value){
+        this.nfts = value;
+    }
+
+    public List<NFT> nftsGet(){
+        return this.nfts;
     }
 
     public void nameSet(String value){
@@ -90,20 +147,44 @@ public class BFTWalletMessage implements Serializable{
         return this.uri;
     }
 
-    public void validitySet(Boolean value){
+    public void mintedNFTIDSet(long value){
+        this.mintedNFTID = value;
+    }
+
+    public long mintedNFTIDGet(){
+        return this.mintedNFTID;
+    }
+
+    public void NftIDSet(long value){
+        this.nftID = value;
+    }
+
+    public long mintedNftIDGet(){
+        return this.nftID;
+    }
+
+    public void validitySet(Date value){
         this.validity = value;
     }
 
-    public Boolean validityGet(){
+    public Date validityGet(){
         return this.validity;
     }
 
-    public void nftSet(NFT value){
-        this.nft = value;
+    public void requestIDSet(Long value){
+        this.requestID = value;
     }
 
-    public NFT nftGet(){
-        return this.nft;
+    public Long requestIDGet(){
+        return this.requestID;
+    }
+
+    public void nftRequestsSet(List<Request> value){
+        this.nftRequests = value;
+    }
+
+    public List<Request> nftRequestsGet(){
+        return this.nftRequests;
     }
 
     public void buyerSet(long value){
@@ -112,14 +193,6 @@ public class BFTWalletMessage implements Serializable{
 
     public long buyerGet(){
         return this.buyer;
-    }
-
-    public void acceptSet(Boolean value){
-        this.accept = value;
-    }
-
-    public Boolean acceptGet(){
-        return this.accept;
     }
 
 }
