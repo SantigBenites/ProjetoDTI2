@@ -17,10 +17,10 @@ public class Wallet {
     private Long IdReqCounter = (long) 0;
 
     //id client
-    private Map<Integer,LinkedList<Coin>> coins;
+    private Map<Long,LinkedList<Coin>> coins;
 
     //
-    private Map<Integer,LinkedList<NFT>> nfts;
+    private Map<Long,LinkedList<NFT>> nfts;
 
     //
     private LinkedList<Request> requests;
@@ -29,7 +29,7 @@ public class Wallet {
 
 
     // MINT(value)
-    public long addCoin(Integer idOwner, Float value){
+    public long addCoin(Long idOwner, Float value){
         IDCoinCounter ++;
         LinkedList<Coin> list ;
         Coin c = new Coin(IDCoinCounter, idOwner);
@@ -42,32 +42,26 @@ public class Wallet {
     }
 
     //SPEND(coins, receiver, value)
-    public int spend(Integer Owner, List<Long> coinsToSpend, Integer receiver, float value){
+    public int spend(Long Owner, List<Long> coinsToSpend, Long receiver, float value){
         LinkedList<Coin> coinsOwner = coins.get(Owner);
-        List<Long> ids = new LinkedList<Long>();
-        List<Coin> coinsUsed = new LinkedList<Coin>();
         float sum = 0;
-        if(coinsOwner.size() == 0 ){return 0;}
-        for (Coin c : coinsOwner){
-            ids.add(c.getId());
-        }
-        for (Long id: coinsToSpend){
-            if(!ids.contains(id)){return 0;}
-            for (Coin c: coinsOwner){
-                if(c.getId() == id){
-                    sum += c.getValue();
-                    coinsUsed.add(c);
-                }
+        LinkedList<Coin> list = getCoinsById(coinsToSpend);
+        if(list.size() == 0){return 0;}
+
+        for(Coin c : list){
+            sum += c.getValue();
+            if(c.getOwner() != Owner){
+                return 0;
             }
         }
+        
         if(sum<value){return 0;}
 
         //remove coins used from Owner
-        for (Coin c : coinsUsed){
-            coinsOwner.remove(c);
+        for (Coin coin : list){
+            coinsOwner.remove(coin);
         }
         coins.put(Owner, coinsOwner);
-
         addCoin(receiver, value);
         addCoin(Owner, sum-value);
 
@@ -75,16 +69,16 @@ public class Wallet {
     }
 
     //my_coins
-    public LinkedList<Coin> getCoins(Integer idOwner){
+    public LinkedList<Coin> getCoins(Long idOwner){
         return coins.get(idOwner);
 
     }
     //my_nft
-    public LinkedList<NFT> getNFT(Integer id){
+    public LinkedList<NFT> getNFT(Long id){
         return nfts.get(id);
     }
     //MINT_NFT (name and url)
-    public long addNFT(Integer idOwner, String name, String url){
+    public long addNFT(Long idOwner, String name, String url){
         IdNFTCounter ++;
         LinkedList<NFT> list ;
         NFT nft  = new NFT(IdNFTCounter, idOwner);
@@ -112,7 +106,6 @@ public class Wallet {
                 if(n.getId() == nftId){
                     return n;
                 }
-
             }
         }
         return null;
@@ -133,7 +126,7 @@ public class Wallet {
         }
         return list;
     }
-    public long addRequest(Integer idOwner, Long nftId, List<Long> coins, Float value, Date validity){ 
+    public long addRequest(Integer idOwner, Long nftId, List<Long> coins, Float value, int validity){ 
         NFT nft = getNft(nftId);
         if(nft == null){return 0;}
 
@@ -147,10 +140,9 @@ public class Wallet {
         for (Request r:requests){
             if (r.getCoinsOwner() == idOwner && r.getNFT().equals(nft)){return 0;}
         }
-        if (!isValid(validity)){ return 0;}
 
         IdReqCounter ++;
-        requests.add(new Request(nft, list, value, idOwner, validity));
+        requests.add(new Request(nft, list, value, idOwner, new Date() ));
         return IdReqCounter;
     }
 
@@ -182,7 +174,7 @@ public class Wallet {
     }
 
     //PROCESS_NFT_TRANSFER(
-    public float transfer(Long nft,int idBuyer, Boolean accept){
+    public float transfer(Long nft,Long idBuyer, Boolean accept){
         if(!accept){return 0 ;}
         float sum = 0;
         for (Request r:requests){

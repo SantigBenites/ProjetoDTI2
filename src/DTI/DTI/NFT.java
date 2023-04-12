@@ -3,18 +3,16 @@ package DTI;
 public class NFT {
     
     long id;
-    int Owner;
+    Long Owner;
     String name;
     String URI;
 
-    public NFT(long id, int Owner){
+    public NFT(long id, long Owner){
         this.id = id;
         this.Owner = Owner;
     }
 
-    public void setOwner(int Owner){
-        this.Owner = Owner;
-    }
+
 
     public long Mint(String name, String URI){
         this.name = name;
@@ -26,7 +24,7 @@ public class NFT {
         return this.id;
     }
 
-    public int getOwner(){
+    public long getOwner(){
         return this.Owner;
     }
 
@@ -46,5 +44,14 @@ public class NFT {
         return nft.id == this.id && nft.Owner == this.Owner && nft.name.equals(this.name) && this.URI.equals(nft.URI);
 
     }
+
+
+
+    public void setOwner(Long idBuyer) {
+        this.Owner = idBuyer;
+    }
+
+
+
 
 }

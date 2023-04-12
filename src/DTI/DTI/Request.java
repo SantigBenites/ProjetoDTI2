@@ -22,7 +22,7 @@ public class Request {
         this.processed = false;
     }
 
-    public int getNftOwner(){
+    public long getNftOwner(){
         return this.nftToBuy.getOwner();
     }
 
@@ -30,7 +30,7 @@ public class Request {
         return this.nftToBuy;
     }
 
-    public int getCoinsOwner(){
+    public long getCoinsOwner(){
         return this.coinsUsed.getLast().getOwner();
     }
 

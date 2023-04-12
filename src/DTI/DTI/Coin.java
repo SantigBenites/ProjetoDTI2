@@ -3,11 +3,11 @@ package DTI;
 public class Coin {
         
     long id;
-    int Owner;
+    Long Owner;
     float value;
 
 
-    public Coin(long id, int Owner) {
+    public Coin(long id, long Owner) {
         this.id = id;
         this.Owner = Owner;
 
@@ -24,6 +24,10 @@ public class Coin {
 
     public long getId(){
         return this.id;
+    }
+
+    public long getOwner() {
+        return this.Owner;
     }
     
     @Override
@@ -42,8 +46,5 @@ public class Coin {
 
     }
 
-    public int getOwner() {
-        return this.Owner;
-    }
 
 }
