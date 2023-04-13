@@ -191,6 +191,7 @@ public class Wallet implements Serializable{
 
                 if(!acceped){
                     removeRequest(r.getCoinsOwner(), nftId);
+                    return -1;
                 }
 
                 for (Coin c : r.getCoins()){
