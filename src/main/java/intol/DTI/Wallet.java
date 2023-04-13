@@ -184,7 +184,8 @@ public class Wallet implements Serializable{
     public long transfer(Long Owner, Long nftId,Long idBuyer){
         long id = 0;
         float sum = 0;
-        for (Request r:requests){ 
+        for (Request r:requests){
+            System.out.println("Buyer "  + r.getCoinsOwner() + " Owner " +  r.getNftOwner()+ " Value " + r.getValue() + " Validity " + isValid(r.getValidity()));
 
             if(r.getCoinsOwner() == idBuyer && r.getNFT().getId() == nftId && isValid(r.getValidity()) && !r.isProcessed()){
 
@@ -193,6 +194,8 @@ public class Wallet implements Serializable{
                     sum += c.getValue();
                 }
 
+                System.out.println("sum: " + sum);
+
                 if(sum<r.getValue()){return 0;}
 
                 //exchange nft owner
@@ -200,21 +203,37 @@ public class Wallet implements Serializable{
                 if(nft == null){
                     return 0;
                 }
+
+                System.out.println("nft: " + nft.getId() + " Owner: "  + nft.getOwner());
+                System.out.println("nfts: before ");
                 LinkedList<NFT> list = nfts.get(Owner);
+                for(NFT n : list){
+                    System.out.println("nft: " + n.getId() + " Owner: "  + n.getOwner());
+                }
                 list.remove(nft);
                 nfts.put(Owner, list);
 
+                System.out.println("nfts: after ");
+
+                for(NFT n : list){
+                    System.out.println("nft: " + n.getId() + " Owner: "  + n.getOwner());
+                }
+                
+
                 nft.setOwner(idBuyer);
                 LinkedList<NFT> listBuyer = nfts.get(idBuyer);
+                if(listBuyer == null){listBuyer = new LinkedList<NFT>();}
                 listBuyer.add(nft);
                 nfts.put(idBuyer, listBuyer);
 
 
-
                 //removes coins used
                 LinkedList<Coin> coinsFromBuyer = coins.get(idBuyer);
+
+                if(coinsFromBuyer == null){return 0;}
                 for(Coin c : r.getCoins()){
                     coinsFromBuyer.remove(c);
+                    System.out.println("CoinId: " + c.getId() + " Owner " + c.getOwner() );
                 }
 
                 coins.put(idBuyer, coinsFromBuyer);
@@ -225,11 +244,14 @@ public class Wallet implements Serializable{
 
                 //change 
                 removeRequest(Owner,nftId);
+                System.out.println("Passa removeRequest");
                 r.setProcessed(true);
                 requests.add(r);
+                System.out.println(id);
+                return id;
             }
         }
-        return id;
+        return 0;
 
     }
 
