@@ -41,9 +41,6 @@ public class DTIServer extends DefaultSingleRecoverable{
             switch (cmd) {
                 case MINT:
 
-                    if(request.userGet() != 4){
-                        return null;
-                    }
 
                     long newCoinId = replicaWallet.addCoin(request.userGet(), request.valueGet());
                     response.mintedCoinIDSet(newCoinId);
