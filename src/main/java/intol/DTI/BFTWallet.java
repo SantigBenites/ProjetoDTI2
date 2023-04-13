@@ -265,12 +265,12 @@ public class BFTWallet {
         }
     }
     
-    public long PROCESS_NFT_TRASNFER(long nft, long buyer, Boolean accept){
+    public long PROCESS_NFT_TRANSFER(long nft, long buyer, Boolean accept){
 
         byte[] rep;
         try {
             BFTWalletMessage request = new BFTWalletMessage();
-            request.typeSet(MessageType.PROCESS_NFT_TRASNFER);
+            request.typeSet(MessageType.PROCESS_NFT_TRANSFER);
             request.userSet(id);
             request.NftIDSet(nft);
             request.buyerSet(buyer);

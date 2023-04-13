@@ -202,7 +202,7 @@ public class DTIInterface {
                 if(canceledRequestID == -1){
                     System.out.println("\tWasn't able to remove request\n");
                 }else{
-                    System.out.println("\tThe request with ID " + canceledRequestID + " has been canceled\n");
+                    System.out.println("\tRequest was cancelled\n");
                 }
 
 
@@ -254,7 +254,7 @@ public class DTIInterface {
                     continue;
                 }
 
-                long newCoin = BFTWallet.PROCESS_NFT_TRASNFER(NFT_ID, buyer_ID, accept);
+                long newCoin = BFTWallet.PROCESS_NFT_TRANSFER(NFT_ID, buyer_ID, accept);
 
                 if(newCoin == 0 ){
                     System.out.println("\tThere was an error in processing the transfer\n");
