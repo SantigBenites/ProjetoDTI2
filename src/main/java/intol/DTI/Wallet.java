@@ -35,6 +35,7 @@ public class Wallet implements Serializable{
         LinkedList<Coin> list ;
         Coin c = new Coin(IDCoinCounter, idOwner);
         c.Mint(value);
+        if(coins == null){coins = new HashMap<>();}
         if(!coins.containsKey(idOwner)){list = new LinkedList<Coin>();}
         else{list = coins.get(idOwner);}
         list.add(c);
