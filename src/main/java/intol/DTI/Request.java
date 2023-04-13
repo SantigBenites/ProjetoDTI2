@@ -14,12 +14,11 @@ public class Request implements Serializable {
     Date validity;
     Boolean processed;
 
-    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, long issuer, int validity){
+    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, long issuer, Date validity){
         this.nftToBuy = nftToBuy;
         this.coinsUsed = coinsUsed;
         this.value = value;
-        Date date = new Date();
-        this.validity = new Date(date.getTime() + validity * 60000);
+        this.validity = validity;
         this.issuer = issuer;
         this.processed = false;
     }
