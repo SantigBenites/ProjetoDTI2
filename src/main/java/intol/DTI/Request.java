@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Request implements Serializable {
     
+    
     NFT nftToBuy;
     LinkedList<Coin> coinsUsed;
     float value;
     Long issuer;
     Date validity;
-    Boolean processed;
 
     public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, long issuer, Date validity){
         this.nftToBuy = nftToBuy;
@@ -20,7 +20,10 @@ public class Request implements Serializable {
         this.value = value;
         this.validity = validity;
         this.issuer = issuer;
-        this.processed = false;
+    }
+
+    public Long getIssuer() {
+        return this.issuer;
     }
 
     public long getNftOwner(){
@@ -40,15 +43,10 @@ public class Request implements Serializable {
         return this.coinsUsed;
     }
 
-    public boolean isProcessed() {
-        return this.processed;
-    }
     public float getValue() {
         return this.value;
     }
-    public void setProcessed(boolean b) {
-        this.processed = b;
-    }
+
 
     public Date getValidity() {
         return this.validity;
@@ -69,7 +67,7 @@ public class Request implements Serializable {
 
 
         return req.nftToBuy.equals(this.nftToBuy) && req.value == this.value 
-        && req.validity == this.validity && this.processed == req.processed
+        && req.validity == this.validity 
         && req.coinsUsed.equals(this.coinsUsed);
 
     }
@@ -78,7 +76,7 @@ public class Request implements Serializable {
 
     @Override
     public String toString(){
-        return  this.nftToBuy + " " + this.coinsUsed + " " + this.value + " " + this.validity.getTime() + " " + this.issuer + " " + this.processed;
+        return  this.nftToBuy + " " + this.coinsUsed + " " + this.value + " " + this.validity.getTime() + " " + this.issuer;
     }
 
 

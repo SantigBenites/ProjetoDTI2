@@ -173,7 +173,7 @@ public class Wallet implements Serializable{
         LinkedList<Request> list = new LinkedList<Request>();
         for (Request req: requests){
             System.out.println(req.getValidity());
-            if(req.getNFT().getId() == nft && isValid(req.getValidity())){
+            if(req.getNFT().getId() == nft && isValid(req.getValidity()) && req.getIssuer()==idClient){
                 list.add(req);
             }
         }
@@ -181,13 +181,17 @@ public class Wallet implements Serializable{
     }
 
     //PROCESS_NFT_TRANSFER(
-    public long transfer(Long Owner, Long nftId,Long idBuyer){
+    public long transfer(Long Owner, Long nftId,Long idBuyer, Boolean acceped){
         long id = 0;
         float sum = 0;
         for (Request r:requests){
             System.out.println("Buyer "  + r.getCoinsOwner() + " Owner " +  r.getNftOwner()+ " Value " + r.getValue() + " Validity " + isValid(r.getValidity()));
 
-            if(r.getCoinsOwner() == idBuyer && r.getNFT().getId() == nftId && isValid(r.getValidity()) && !r.isProcessed()){
+            if(r.getCoinsOwner() == idBuyer && r.getNFT().getId() == nftId && isValid(r.getValidity())){
+
+                if(!acceped){
+                    removeRequest(r.getCoinsOwner(), nftId);
+                }
 
                 for (Coin c : r.getCoins()){
                     if(idBuyer != c.getOwner()){return 0;}
@@ -245,7 +249,6 @@ public class Wallet implements Serializable{
                 //change 
                 removeRequest(Owner,nftId);
                 System.out.println("Passa removeRequest");
-                r.setProcessed(true);
                 requests.add(r);
                 System.out.println(id);
                 return id;
