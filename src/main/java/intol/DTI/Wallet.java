@@ -157,8 +157,8 @@ public class Wallet implements Serializable{
 
     }
     //MY_NFT_REQUEST
-    public List<Request> getRequests(Long idClient, long nft){
-        List<Request> list = new LinkedList<Request>();
+    public LinkedList<Request> getRequests(Long idClient, long nft){
+        LinkedList<Request> list = new LinkedList<Request>();
         for (Request req: requests){
             if(req.getNFT().getId() == nft){
                 list.add(req);

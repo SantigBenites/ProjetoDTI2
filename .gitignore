@@ -1,5 +1,4 @@
 bin/bftsmart
-bin
 config/currentView
 test
 
@@ -8,5 +7,3 @@ test
 
 # Ignore Gradle build output directory
 build
-build/*
-bin/main/intol/DTI/*

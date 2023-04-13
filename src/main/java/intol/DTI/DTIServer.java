@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DTIServer extends DefaultSingleRecoverable{
     private final Logger logger = LoggerFactory.getLogger("bftsmart");
@@ -45,7 +47,7 @@ public class DTIServer extends DefaultSingleRecoverable{
 
                     long newCoinId = replicaWallet.addCoin(request.userGet(), request.valueGet());
                     response.mintedCoinIDSet(newCoinId);
-
+                    
                     return BFTWalletMessage.toBytes(response); 
                 case SPEND:
 
@@ -98,15 +100,24 @@ public class DTIServer extends DefaultSingleRecoverable{
             switch (cmd) {
                 //read operations on the map
                 case MY_COINS:
+
+                    LinkedList<Coin> coins = replicaWallet.getCoins(request.userGet());
+                    response.coinsSet(coins);
                     
                     return BFTWalletMessage.toBytes(response);
             
                 case MY_NFT:
 
+                    LinkedList<NFT> nfts = replicaWallet.getNFT(request.userGet());
+                    response.nftsSet(nfts);
+
                     return BFTWalletMessage.toBytes(response);
                     
                 case MY_NFT_REQUEST:
-                    
+
+                    LinkedList<Request> requests = replicaWallet.getRequests(request.userGet(),request.NftIDGet());
+                    response.nftRequestsSet(requests);
+
                     return BFTWalletMessage.toBytes(response);
                 }
         } catch (IOException | ClassNotFoundException ex) {
