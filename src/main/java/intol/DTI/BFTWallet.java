@@ -240,7 +240,7 @@ public class BFTWallet {
             request.NftIDSet(nft);
 
             //invokes BFT-SMaRt
-            rep = serviceProxy.invokeUnordered(BFTWalletMessage.toBytes(request));
+            rep = serviceProxy.invokeOrdered(BFTWalletMessage.toBytes(request));
         } catch (IOException e) {
             logger.error("Failed to send GET request");
             return null;

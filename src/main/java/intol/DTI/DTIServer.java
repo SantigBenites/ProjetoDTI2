@@ -74,7 +74,28 @@ public class DTIServer extends DefaultSingleRecoverable{
                     response.returnCoinSet(newCoinPaymentID);
 
                     return BFTWalletMessage.toBytes(response); 
+                
+                case MY_COINS:
 
+                    LinkedList<Coin> coins = replicaWallet.getCoins(request.userGet());
+                    response.coinsSet(coins);
+                    
+                    return BFTWalletMessage.toBytes(response);
+            
+                case MY_NFT:
+
+                    LinkedList<NFT> nfts = replicaWallet.getNFT(request.userGet());
+                    response.nftsSet(nfts);
+
+                    return BFTWalletMessage.toBytes(response);
+                    
+                case MY_NFT_REQUEST:
+
+                    LinkedList<Request> requests = replicaWallet.getRequests(request.userGet(),request.NftIDGet());
+                    response.nftRequestsSet(requests);
+
+                    return BFTWalletMessage.toBytes(response);
+                
             }
 
             return null;

@@ -146,7 +146,7 @@ public class Wallet implements Serializable{
         }
 
         IdReqCounter ++;
-        requests.add(new Request(nft, list, value, idOwner, new Date() ));
+        requests.add(new Request(nft, list, value, idOwner, validity ));
         return IdReqCounter;
     }
 

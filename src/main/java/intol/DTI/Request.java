@@ -14,11 +14,12 @@ public class Request implements Serializable {
     Date validity;
     Boolean processed;
 
-    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, long issuer, Date validity){
+    public Request( NFT nftToBuy, LinkedList<Coin> coinsUsed, float value, long issuer, int validity){
         this.nftToBuy = nftToBuy;
         this.coinsUsed = coinsUsed;
         this.value = value;
-        this.validity = new Date(validity.getTime() + (10 * 60000));
+        Date date = new Date();
+        this.validity = new Date(date.getTime() + validity * 60000);
         this.issuer = issuer;
         this.processed = false;
     }
@@ -78,7 +79,7 @@ public class Request implements Serializable {
 
     @Override
     public String toString(){
-        return this.issuer + " " + this.value + " " + this.getNftOwner();
+        return  this.nftToBuy + " " + this.coinsUsed + " " + this.value + " " + this.validity.getTime() + " " + this.issuer + " " + this.processed;
     }
 
 
