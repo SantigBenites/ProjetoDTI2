@@ -160,8 +160,10 @@ public class Wallet implements Serializable{
     public void removeRequest(long idClient, long nft){
         for (Request r:requests){
             if(r.getCoinsOwner() == idClient){
-                if( r.getNFT().getId() == nft ){
+                System.out.println(r.getCoinsOwner());
+                if( r.getNFT().getId() == nft){
                     requests.remove(r);
+                    System.out.println("remove " + r.getNFT().getId());
                 }
             }
 
@@ -171,10 +173,13 @@ public class Wallet implements Serializable{
     //MY_NFT_REQUEST
     public LinkedList<Request> getRequests(Long idClient, long nft){
         LinkedList<Request> list = new LinkedList<Request>();
+        NFT n = getNft(nft);
+        if(n == null){return null;}
         for (Request req: requests){
             System.out.println(req.getValidity());
-            if(req.getNFT().getId() == nft && isValid(req.getValidity()) && req.getIssuer()==idClient){
+            if(req.getNFT().getId() == nft && isValid(req.getValidity()) && idClient == n.getOwner()){
                 list.add(req);
+                System.out.println("Buyer " + req.getCoinsOwner() + " Owner " + req);
             }
         }
         return list;
