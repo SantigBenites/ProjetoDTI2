@@ -37,6 +37,7 @@ public class BFTWalletMessage implements Serializable{
     private List<Request> nftRequests;
     // PROCESS_NFT_TRANSFER(nft, buyer, accept)
     private long buyer;
+    private Boolean accept;
 
     public BFTWalletMessage() {
     }
@@ -193,6 +194,14 @@ public class BFTWalletMessage implements Serializable{
 
     public long buyerGet(){
         return this.buyer;
+    }
+
+    public void acceptSet(Boolean value){
+        this.accept = value;
+    }
+
+    public Boolean acceptGet(){
+        return this.accept;
     }
 
 }

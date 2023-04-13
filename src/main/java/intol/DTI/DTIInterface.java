@@ -64,7 +64,13 @@ public class DTIInterface {
                 }
 
                 long newCoinID = BFTWallet.MINT(coin_value);
-                System.out.println("\tNew coin has ID " + newCoinID + "\n");
+
+                if (newCoinID == -1) {
+                    System.out.println("Wasn't able to a mint new coin");
+                    continue;
+                }else{
+                    System.out.println("\tNew coin has ID " + newCoinID + "\n");
+                }
 
             }else if(cmd.equalsIgnoreCase("SPEND")){
 
@@ -125,7 +131,11 @@ public class DTIInterface {
 
                 long newNFTID = BFTWallet.MINT_NFT(name,uri);
 
-                System.out.println("\tNew NFT has ID " + newNFTID + "\n");
+                if(newNFTID != -1){
+                    System.out.println("\tWasn't able to create the NFT\n");
+                }else{
+                    System.out.println("\tNew NFT with ID " + newNFTID + "\n");
+                }
 
             }else if(cmd.equalsIgnoreCase("REQUEST_NFT_TRANSFER")){
 
@@ -170,7 +180,12 @@ public class DTIInterface {
 
                 long newNFTID = BFTWallet.REQUEST_NFT_TRANSFER(NFT_ID,coins,request_value,validity_value);
 
-                System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " \n");
+                if(newNFTID != -1){
+                    System.out.println("\tWasn't able to create the new request\n");
+                }else{
+                    System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " \n");
+                }
+
 
             }else if(cmd.equalsIgnoreCase("CANCEL_REQUEST_NFT_TRANSFER")){
 
@@ -182,9 +197,14 @@ public class DTIInterface {
                     continue;
                 }
 
-                BFTWallet.CANCEL_REQUEST_NFT_TRANSFER(request_ID);
+                long canceledRequestID = BFTWallet.CANCEL_REQUEST_NFT_TRANSFER(request_ID);
 
-                System.out.println("\tThe request with ID " + request_ID + " has been canceled\n");
+                if(canceledRequestID == -1){
+                    System.out.println("\tWasn't able to remove request\n");
+                }else{
+                    System.out.println("\tThe request with ID " + canceledRequestID + " has been canceled\n");
+                }
+
 
             }else if(cmd.equalsIgnoreCase("MY_NFT_REQUESTS")){
 
@@ -234,7 +254,15 @@ public class DTIInterface {
                     continue;
                 }
 
-                BFTWallet.PROCESS_NFT_TRASNFER(NFT_ID, buyer_ID, accept);
+                long newCoin = BFTWallet.PROCESS_NFT_TRASNFER(NFT_ID, buyer_ID, accept);
+
+                if(newCoin == 0 ){
+                    System.out.println("\tThere was an error in processing the transfer\n");
+                }else if(newCoin == -1){
+                    System.out.println("\tYour refused the transfer, the request was removed\n");
+                }else{
+                    System.out.println("\tThe request was accepted the value was put in coin with ID: " + newCoin + "\n");
+                }
 
             }else{
                 System.out.println("\tInvalid command :P\n");

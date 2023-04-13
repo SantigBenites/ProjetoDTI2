@@ -267,10 +267,6 @@ public class BFTWallet {
     
     public long PROCESS_NFT_TRASNFER(long nft, long buyer, Boolean accept){
 
-        if(!accept){
-            return -1;
-        }
-
         byte[] rep;
         try {
             BFTWalletMessage request = new BFTWalletMessage();
@@ -278,6 +274,7 @@ public class BFTWallet {
             request.userSet(id);
             request.NftIDSet(nft);
             request.buyerSet(buyer);
+            request.acceptSet(accept);
 
             //invokes BFT-SMaRt
             rep = serviceProxy.invokeOrdered(BFTWalletMessage.toBytes(request));
