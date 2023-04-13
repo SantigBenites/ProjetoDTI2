@@ -104,7 +104,7 @@ public class DTIInterface {
                 }
 
                 long newCoinID = BFTWallet.SPEND(coins,receiver,coin_value);
-                if(newCoinID != 0){
+                if(newCoinID == -1){
                     System.out.println("\tCoin created in return has ID " + newCoinID + "\n");
                 }else{
                     System.out.println("\tFailed to buy coin\n");
@@ -131,7 +131,7 @@ public class DTIInterface {
 
                 long newNFTID = BFTWallet.MINT_NFT(name,uri);
 
-                if(newNFTID != -1){
+                if(newNFTID == -1){
                     System.out.println("\tWasn't able to create the NFT\n");
                 }else{
                     System.out.println("\tNew NFT with ID " + newNFTID + "\n");
@@ -180,7 +180,7 @@ public class DTIInterface {
 
                 long newNFTID = BFTWallet.REQUEST_NFT_TRANSFER(NFT_ID,coins,request_value,validity_value);
 
-                if(newNFTID != -1){
+                if(newNFTID == -1){
                     System.out.println("\tWasn't able to create the new request\n");
                 }else{
                     System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " \n");
