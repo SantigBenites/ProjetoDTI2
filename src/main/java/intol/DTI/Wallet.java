@@ -2,6 +2,7 @@ package intol.DTI;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,13 +18,13 @@ public class Wallet implements Serializable{
     private Long IdReqCounter = (long) 0;
 
     //id client
-    private Map<Long,LinkedList<Coin>> coins;
+    private Map<Long,LinkedList<Coin>> coins = new HashMap<>();
 
     //
-    private Map<Long,LinkedList<NFT>> nfts;
+    private Map<Long,LinkedList<NFT>> nfts = new HashMap<>();
 
     //
-    private LinkedList<Request> requests;
+    private LinkedList<Request> requests = new LinkedList<Request>();
 
 
 
