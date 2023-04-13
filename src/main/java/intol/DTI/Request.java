@@ -1,10 +1,11 @@
 package intol.DTI;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Request {
+public class Request implements Serializable {
     
     NFT nftToBuy;
     LinkedList<Coin> coinsUsed;

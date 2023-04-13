@@ -1,6 +1,7 @@
 package intol.DTI;
+import java.io.Serializable;
 
-public class NFT {
+public class NFT implements Serializable {
     
     long id;
     Long Owner;
