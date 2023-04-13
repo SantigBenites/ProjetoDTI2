@@ -2,6 +2,8 @@ package intol.DTI;
 
 import java.io.Console;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -156,11 +158,12 @@ public class DTIInterface {
                     continue;
                 }
 
-                int validity_value;
+                SimpleDateFormat dateInput = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                Date validity_value;
                 try {
-                    validity_value = Integer.parseInt(console.readLine("Enter for how long the request is valid in minutes: "));
-                } catch (NumberFormatException e) {
-                    System.out.println("\tThe number of minutes is supposed to be an integer!\n");
+                    validity_value = dateInput.parse(console.readLine("Enter the date with format yyyy-MM-dd HH:mm"));
+                } catch (ParseException e) {
+                    System.out.println("\tWrong date format\n");
                     continue;
                 }
 
