@@ -144,7 +144,7 @@ public class Wallet implements Serializable{
         }
 
         for (Request r:requests){
-            if (r.getCoinsOwner() == idOwner && r.getNFT().equals(nft)){return 0;}
+            if (r.getCoinsOwner() == idOwner && r.getNFT().equals(nft) && isValid(r.getValidity() )){return 0;}
         }
 
         IdReqCounter ++;
@@ -153,7 +153,7 @@ public class Wallet implements Serializable{
     }
 
     private boolean isValid(Date validity){
-        return validity.before(new Date());
+        return new Date().before(validity);
     }
 
     //CANCEL_REQUEST_NFT_TRANSFER
@@ -172,7 +172,8 @@ public class Wallet implements Serializable{
     public LinkedList<Request> getRequests(Long idClient, long nft){
         LinkedList<Request> list = new LinkedList<Request>();
         for (Request req: requests){
-            if(req.getNFT().getId() == nft){
+            System.out.println(req.getValidity());
+            if(req.getNFT().getId() == nft && isValid(req.getValidity())){
                 list.add(req);
             }
         }
