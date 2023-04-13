@@ -40,6 +40,9 @@ public class BFTWallet {
         }
         try {
             BFTWalletMessage response = BFTWalletMessage.fromBytes(rep);
+            if(response.coinsGet() == null){
+                return null;
+            }
             LinkedList<Pair<Long,Float>> myCoins = new LinkedList<Pair<Long,Float>>();
             for (Coin b : response.coinsGet()) {
                 myCoins.add(new Pair<Long,Float>(b.id,b.value));
@@ -84,14 +87,14 @@ public class BFTWallet {
         byte[] rep;
         try {
             BFTWalletMessage request = new BFTWalletMessage();
-            request.typeSet(MessageType.MINT);
+            request.typeSet(MessageType.SPEND);
             request.userSet(id);
             request.usedCoinsSet(coins);
             request.receiverSet(receiver);
             request.valueSet(value);
 
             //invokes BFT-SMaRt
-            rep = serviceProxy.invokeUnordered(BFTWalletMessage.toBytes(request));
+            rep = serviceProxy.invokeOrdered(BFTWalletMessage.toBytes(request));
         } catch (IOException e) {
             logger.error("Failed to send GET request");
             return -1;
@@ -128,6 +131,9 @@ public class BFTWallet {
         }
         try {
             BFTWalletMessage response = BFTWalletMessage.fromBytes(rep);
+            if(response.nftsGet() == null){
+                return null;
+            }
             LinkedList<Triple<Long,String,String>> myNFTs = new LinkedList<Triple<Long,String,String>>();
             for (NFT b : response.nftsGet()) {
                 myNFTs.add(new Triple<Long,String,String>(b.id,b.name,b.URI));
@@ -234,7 +240,7 @@ public class BFTWallet {
             request.NftIDSet(nft);
 
             //invokes BFT-SMaRt
-            rep = serviceProxy.invokeOrdered(BFTWalletMessage.toBytes(request));
+            rep = serviceProxy.invokeUnordered(BFTWalletMessage.toBytes(request));
         } catch (IOException e) {
             logger.error("Failed to send GET request");
             return null;
@@ -245,6 +251,9 @@ public class BFTWallet {
         }
         try {
             BFTWalletMessage response = BFTWalletMessage.fromBytes(rep);
+            if(response.nftRequestsGet() == null){
+                return null;
+            }
             LinkedList<Triple<Long,Float,Date>> myRequests = new LinkedList<Triple<Long,Float,Date>>();
             for (Request b : response.nftRequestsGet()) {
                 myRequests.add(new Triple<Long,Float,Date>(b.issuer, b.value, b.validity));
@@ -271,7 +280,7 @@ public class BFTWallet {
             request.buyerSet(buyer);
 
             //invokes BFT-SMaRt
-            rep = serviceProxy.invokeUnordered(BFTWalletMessage.toBytes(request));
+            rep = serviceProxy.invokeOrdered(BFTWalletMessage.toBytes(request));
         } catch (IOException e) {
             logger.error("Failed to send GET request");
             return -1;
@@ -315,6 +324,11 @@ public class BFTWallet {
           return this.left.equals(pairo.getLeft()) &&
                  this.right.equals(pairo.getRight());
         }
+
+        @Override
+        public String toString(){
+            return this.left + " " + this.right;
+        }
       
     }
 
@@ -333,6 +347,11 @@ public class BFTWallet {
         public T getFirst() { return first; }
         public U getSecond() { return second; }
         public V getThird() { return third; }
+
+        @Override
+        public String toString(){
+            return this.first + " " + this.second + " " + this.third;
+        }
     }
 
 }

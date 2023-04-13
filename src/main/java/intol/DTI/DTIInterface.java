@@ -40,7 +40,13 @@ public class DTIInterface {
             if (cmd.equalsIgnoreCase("MY_COINS")){
 
                 List<Pair<Long, Float>> myCoins = BFTWallet.MY_COINS();
+                
+                if (myCoins == null) {
+                    System.out.println("No coins available");
+                    continue;
+                }
 
+                System.out.println("ID Value");
                 for (Pair<Long,Float> pair : myCoins) {
                     System.out.println(pair);
                 }
@@ -90,12 +96,22 @@ public class DTIInterface {
                 }
 
                 long newCoinID = BFTWallet.SPEND(coins,receiver,coin_value);
-                System.out.println("\tCoin created in return has ID " + newCoinID + "\n");
+                if(newCoinID != 0){
+                    System.out.println("\tCoin created in return has ID " + newCoinID + "\n");
+                }else{
+                    System.out.println("\tFailed to buy coin\n");
+                }
 
             }else if(cmd.equalsIgnoreCase("MY_NFTS")){
 
                 List<Triple<Long,String,String>> myNFTs = BFTWallet.MY_NFT();
 
+                if (myNFTs == null) {
+                    System.out.println("No NFT's available");
+                    continue;
+                }
+
+                System.out.println("ID Name URI");
                 for (Triple<Long,String,String> triple : myNFTs) {
                     System.out.println(triple);
                 }
@@ -178,6 +194,12 @@ public class DTIInterface {
 
                 List<Triple<Long, Float, Date>> NFTRequests = BFTWallet.MY_NFT_REQUEST(NFT_ID);
 
+                if (NFTRequests == null) {
+                    System.out.println("No NFT requests available");
+                    continue;
+                }
+
+                System.out.println("Issuer Value Validity");
                 for (Triple<Long, Float, Date> triple : NFTRequests) {
                     System.out.println(triple);
                 }

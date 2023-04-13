@@ -76,7 +76,10 @@ public class Request implements Serializable {
 
 
 
-
+    @Override
+    public String toString(){
+        return this.issuer + " " + this.value + " " + this.getNftOwner();
+    }
 
 
 
