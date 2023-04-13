@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Date;
+
 public class Wallet implements Serializable{
     
     // Coins, NFTs and Requests Storage
@@ -130,7 +132,7 @@ public class Wallet implements Serializable{
         }
         return list;
     }
-    public long addRequest(Long idOwner, Long nftId, List<Long> coins, Float value, int validity){ 
+    public long addRequest(Long idOwner, Long nftId, List<Long> coins, Float value, Date validity){ 
         NFT nft = getNft(nftId);
         if(nft == null){return 0;}
 
