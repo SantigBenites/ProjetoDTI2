@@ -174,7 +174,7 @@ public class BFTWallet {
         }
     }
     
-    public long REQUEST_NFT_TRANSFER(Long nft, List<Long> coins, int value, int validity){
+    public long REQUEST_NFT_TRANSFER(Long nft, List<Long> coins, int value, Date validity){
         byte[] rep;
         try {
             BFTWalletMessage request = new BFTWalletMessage();
