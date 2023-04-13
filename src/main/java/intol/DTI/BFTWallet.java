@@ -274,7 +274,7 @@ public class BFTWallet {
         byte[] rep;
         try {
             BFTWalletMessage request = new BFTWalletMessage();
-            request.typeSet(MessageType.MINT);
+            request.typeSet(MessageType.PROCESS_NFT_TRASNFER);
             request.userSet(id);
             request.NftIDSet(nft);
             request.buyerSet(buyer);

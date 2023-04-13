@@ -70,15 +70,15 @@ public class DTIInterface {
 
                 System.out.println("\tEnter coins to be used!\n");
                 List<Long> coins = new LinkedList<>();
-                long currentCoinID = -1;
-                while (currentCoinID != 0) {
-                    try {
-                        currentCoinID = Integer.parseInt(console.readLine("Enter a coin ID: "));
-                    } catch (NumberFormatException e) {
-                        System.out.println("\tThe coin ID is supposed to be an integer!\n");
-                        continue;
+                
+                try {
+                    String CoinIDs = console.readLine("Enter a coin IDs with a space in between: ");
+                    for (String ID : CoinIDs.split(" ")) {
+                        coins.add((long) Integer.parseInt(ID));
                     }
-                    coins.add(currentCoinID);
+                } catch (NumberFormatException e) {
+                    System.out.println("\tThe coin ID is supposed to be an integer!\n");
+                    continue;
                 }
 
                 long receiver;
@@ -139,16 +139,17 @@ public class DTIInterface {
 
                 System.out.println("\tEnter coins to be used!\n");
                 List<Long> coins = new LinkedList<>();
-                long currentCoinID = -1;
-                while (currentCoinID != 0) {
-                    try {
-                        currentCoinID = Integer.parseInt(console.readLine("Enter a coin ID: "));
-                    } catch (NumberFormatException e) {
-                        System.out.println("\tThe coin ID is supposed to be an integer!\n");
-                        continue;
+
+                try {
+                    String CoinIDs = console.readLine("Enter a coin IDs with a space in between: ");
+                    for (String ID : CoinIDs.split(" ")) {
+                        coins.add((long) Integer.parseInt(ID));
                     }
-                    coins.add(currentCoinID);
+                } catch (NumberFormatException e) {
+                    System.out.println("\tThe coin ID is supposed to be an integer!\n");
+                    continue;
                 }
+                
 
                 int request_value;
                 try {
@@ -161,7 +162,7 @@ public class DTIInterface {
                 SimpleDateFormat dateInput = new SimpleDateFormat("yyyy-MM-dd HH:mm");
                 Date validity_value;
                 try {
-                    validity_value = dateInput.parse(console.readLine("Enter the date with format yyyy-MM-dd HH:mm"));
+                    validity_value = dateInput.parse(console.readLine("Enter the date with format yyyy-MM-dd HH:mm: "));
                 } catch (ParseException e) {
                     System.out.println("\tWrong date format\n");
                     continue;
@@ -169,7 +170,7 @@ public class DTIInterface {
 
                 long newNFTID = BFTWallet.REQUEST_NFT_TRANSFER(NFT_ID,coins,request_value,validity_value);
 
-                System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " minutes \n");
+                System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " \n");
 
             }else if(cmd.equalsIgnoreCase("CANCEL_REQUEST_NFT_TRANSFER")){
 
