@@ -43,10 +43,11 @@ public class Wallet implements Serializable{
     }
 
     //SPEND(coins, receiver, value)
-    public int spend(Long Owner, List<Long> coinsToSpend, Long receiver, float value){
+    public long spend(Long Owner, List<Long> coinsToSpend, Long receiver, float value){
         LinkedList<Coin> coinsOwner = coins.get(Owner);
         float sum = 0;
         LinkedList<Coin> list = getCoinsById(coinsToSpend);
+
         if(list.size() == 0){return 0;}
 
         for(Coin c : list){
@@ -64,10 +65,19 @@ public class Wallet implements Serializable{
         }
         coins.put(Owner, coinsOwner);
         addCoin(receiver, value);
-        addCoin(Owner, sum-value);
+        long id = addCoin(Owner, sum-value);
 
-        return 0;
+        /*for (LinkedList<Coin> list2 : coins.values()){
+            for(Coin c : list2){
+                System.out.println( " Id "+ c.getId()+ " Owner "+ c.getOwner() + " value " + c.getValue());
+            }
+        }*/
+
+
+
+        return id;
     }
+
 
     //my_coins
     public LinkedList<Coin> getCoins(Long idOwner){
