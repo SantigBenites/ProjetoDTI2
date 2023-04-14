@@ -152,7 +152,6 @@ public class Wallet implements Serializable{
     //CANCEL_REQUEST_NFT_TRANSFER
     public void removeRequest(long idClient, long nft){
         for (Request r:requests){
-            System.out.println(r.getCoinsOwner() + " "  + r.getNftOwner());
             if(r.getCoinsOwner() == idClient){
                 System.out.println(r.getCoinsOwner());
                 if( r.getNFT().getId() == nft){
@@ -187,8 +186,7 @@ public class Wallet implements Serializable{
                 if(nft == null){
                     return 0;
                 }
-            System.out.println("Buyer "  + r.getCoinsOwner() + " Owner " +  r.getNftOwner()+ " Value " + r.getValue() + " Validity " + isValid(r.getValidity()));
-
+          
             if(r.getCoinsOwner() == idBuyer && r.getNFT().getId() == nftId && isValid(r.getValidity()) && Owner == nft.getOwner()){
 
                 if(!acceped){
@@ -201,43 +199,28 @@ public class Wallet implements Serializable{
                     sum += c.getValue();
                 }
 
-                System.out.println("sum: " + sum);
-
                 if(sum<r.getValue()){return 0;}
-                
-
-                System.out.println("nft: " + nft.getId() + " Owner: "  + nft.getOwner());
-                System.out.println("nfts: before ");
-                LinkedList<NFT> list = nfts.get(Owner);
-                for(NFT n : list){
-                    System.out.println("nft: " + n.getId() + " Owner: "  + n.getOwner());
-                }
-                list.remove(nft);
-                nfts.put(Owner, list);
-
-                System.out.println("nfts: after ");
-
-                for(NFT n : list){
-                    System.out.println("nft: " + n.getId() + " Owner: "  + n.getOwner());
-                }
-                
-
-
 
                 //removes coins used
                 LinkedList<Coin> coinsFromBuyer = coins.get(idBuyer);
 
                 if(coinsFromBuyer == null){return 0;}
                 for(Coin c : r.getCoins()){
+                    if(!coinsFromBuyer.contains(c)){return 0;}
                     coinsFromBuyer.remove(c);
-                    System.out.println("CoinId: " + c.getId() + " Owner " + c.getOwner() );
                 }
 
                 coins.put(idBuyer, coinsFromBuyer);
 
+                coinsFromBuyer = coins.get(idBuyer);
+
                 //add new coins
                 id = addCoin(Owner, r.getValue());
                 addCoin(idBuyer, sum - r.getValue());
+                
+                LinkedList<NFT> list = nfts.get(Owner);
+                list.remove(nft);
+                nfts.put(Owner, list);
 
                 //remove request
                 removeRequest(idBuyer,nftId);
