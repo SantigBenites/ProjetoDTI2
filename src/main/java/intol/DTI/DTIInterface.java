@@ -181,7 +181,9 @@ public class DTIInterface {
                 long newNFTID = BFTWallet.REQUEST_NFT_TRANSFER(NFT_ID,coins,request_value,validity_value);
 
                 if(newNFTID == -1){
-                    System.out.println("\tWasn't able to create the new request\n");
+                    System.out.println("\tServer error\n");
+                }else if(newNFTID == 0){
+                    System.out.println("\tError in the request\n");
                 }else{
                     System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " \n");
                 }
