@@ -1,8 +1,19 @@
+# Projeto DTI
+
+We are using version 16 of jdk as recommended in the TP class.
+Moreover the commands we are using are for unix.
+
 # Build
+
+In the root of the project run:
+
 ```bash
 ./gradlew installDist
 ```
 # Run
+
+In the root/build/install/Projeto2 run:
+
 Run at least 4 replicas:
 ```bash
 ./smartrun.sh intol.DTI.DTIServer 0

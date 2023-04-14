@@ -105,9 +105,11 @@ public class DTIInterface {
 
                 long newCoinID = BFTWallet.SPEND(coins,receiver,coin_value);
                 if(newCoinID == -1){
-                    System.out.println("\tCoin created in return has ID " + newCoinID + "\n");
-                }else{
+                    System.out.println("\tServer error\n");
+                }else if (newCoinID == 0) {
                     System.out.println("\tFailed to buy coin\n");
+                }else{
+                    System.out.println("\tCoin created in return has ID " + newCoinID + "\n");
                 }
 
             }else if(cmd.equalsIgnoreCase("MY_NFTS")){
@@ -132,6 +134,8 @@ public class DTIInterface {
                 long newNFTID = BFTWallet.MINT_NFT(name,uri);
 
                 if(newNFTID == -1){
+                    System.out.println("\tServer error\n");
+                }else if (newNFTID == 0) {
                     System.out.println("\tWasn't able to create the NFT\n");
                 }else{
                     System.out.println("\tNew NFT with ID " + newNFTID + "\n");
@@ -193,7 +197,7 @@ public class DTIInterface {
 
                 long request_ID;
                 try {
-                    request_ID = Integer.parseInt(console.readLine("Enter request ID you want to cancel: "));
+                    request_ID = Integer.parseInt(console.readLine("Enter ID of the NFT you want to cancel the request for: "));
                 } catch (NumberFormatException e) {
                     System.out.println("\tThe ID is supposed to be an integer!\n");
                     continue;
@@ -202,6 +206,8 @@ public class DTIInterface {
                 long canceledRequestID = BFTWallet.CANCEL_REQUEST_NFT_TRANSFER(request_ID);
 
                 if(canceledRequestID == -1){
+                    System.out.println("\tServer error\n");
+                }else if (canceledRequestID == 0) {
                     System.out.println("\tWasn't able to remove request\n");
                 }else{
                     System.out.println("\tRequest was cancelled\n");
