@@ -181,7 +181,9 @@ public class DTIInterface {
                 long newNFTID = BFTWallet.REQUEST_NFT_TRANSFER(NFT_ID,coins,request_value,validity_value);
 
                 if(newNFTID == -1){
-                    System.out.println("\tWasn't able to create the new request\n");
+                    System.out.println("\tServer error\n");
+                }else if(newNFTID == 0){
+                    System.out.println("\tError in the request\n");
                 }else{
                     System.out.println("\tA new request for NFT of ID " + NFT_ID + " has been made with value " + request_value + " and will expire in  " + validity_value + " \n");
                 }
@@ -202,7 +204,7 @@ public class DTIInterface {
                 if(canceledRequestID == -1){
                     System.out.println("\tWasn't able to remove request\n");
                 }else{
-                    System.out.println("\tThe request with ID " + canceledRequestID + " has been canceled\n");
+                    System.out.println("\tRequest was cancelled\n");
                 }
 
 
@@ -254,7 +256,7 @@ public class DTIInterface {
                     continue;
                 }
 
-                long newCoin = BFTWallet.PROCESS_NFT_TRASNFER(NFT_ID, buyer_ID, accept);
+                long newCoin = BFTWallet.PROCESS_NFT_TRANSFER(NFT_ID, buyer_ID, accept);
 
                 if(newCoin == 0 ){
                     System.out.println("\tThere was an error in processing the transfer\n");

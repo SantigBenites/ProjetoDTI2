@@ -68,7 +68,7 @@ public class DTIServer extends DefaultSingleRecoverable{
                     replicaWallet.removeRequest(request.userGet(), request.NftIDGet());
 
                     return BFTWalletMessage.toBytes(response); 
-                case PROCESS_NFT_TRASNFER:
+                case PROCESS_NFT_TRANSFER:
 
                     long newCoinPaymentID = replicaWallet.transfer(request.userGet(),request.NftIDGet(),request.buyerGet(),request.acceptGet());
                     response.returnCoinSet(newCoinPaymentID);
